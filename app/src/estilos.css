@@ -1,0 +1,105 @@
+:root {
+  color-scheme: dark;
+  --bg-app: #060d0a;
+  --bg-surface: #0b1713;
+  --border: rgba(255, 255, 255, 0.08);
+  --text: #f1f5f3;
+  --text-muted: #8a9a93;
+  --primary: #34d399;
+  --primary-soft: rgba(52, 211, 153, 0.12);
+  --r-card: 16px;
+  --r-control: 10px;
+  --page-x: 16px;
+
+  font-family: "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--bg-app);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+
+.contenedor {
+  max-inline-size: 72rem;
+  margin-inline: auto;
+  padding-inline: var(--page-x);
+}
+
+.barra-superior {
+  border-block-end: 1px solid var(--border);
+}
+
+.barra-superior__contenido {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-block-size: 64px;
+  padding-block: 12px;
+}
+
+.marca {
+  display: grid;
+  flex: none;
+  place-items: center;
+  inline-size: 36px;
+  block-size: 36px;
+  border-radius: var(--r-control);
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.barra-superior h1 {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.contenido {
+  padding-block: 24px;
+}
+
+.panel {
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-card);
+  background: var(--bg-surface);
+}
+
+.panel h2 {
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+}
+
+.panel p {
+  margin-block-start: 8px;
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --page-x: 28px;
+  }
+
+  .contenido {
+    padding-block: 32px;
+  }
+}
