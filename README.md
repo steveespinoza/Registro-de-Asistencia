@@ -4,6 +4,18 @@ Proyecto de una demo web para dar de alta al personal, registrar entradas y sali
 
 La aplicación se plantea como un sitio estático con React, JavaScript, CSS y Vite. El diseño prioriza el celular y conserva los registros en el navegador mediante `localStorage`.
 
+## Desarrollo local
+
+La base de la interfaz se ejecuta con Node.js 20.19+ dentro de la serie 20, o con Node.js 22.12 o posterior.
+
+```sh
+cd app
+npm ci
+npm run dev
+```
+
+`npm run build` genera los archivos estáticos en `app/dist/`. `npm run preview` permite revisar esa compilación en el navegador.
+
 ## Documentación del MVP
 
 - [Alcance y criterios de aceptación](docs/03-Alcance/Alcance-MVP.md)
