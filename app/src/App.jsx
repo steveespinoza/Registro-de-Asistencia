@@ -2,27 +2,17 @@ import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 import AccionesMarcacion from './componentes/AccionesMarcacion.jsx'
 import BarraLateral from './componentes/BarraLateral.jsx'
 import BusquedaEmpleados from './componentes/BusquedaEmpleados.jsx'
+import EncabezadoPanel from './componentes/EncabezadoPanel.jsx'
 import FormularioEmpleado from './componentes/FormularioEmpleado.jsx'
 import HistorialEmpleado from './componentes/HistorialEmpleado.jsx'
+import SelectorEmpleado from './componentes/SelectorEmpleado.jsx'
+import { eliminarFoto, guardarFoto } from './datos/fotosLocal.js'
 import { actualizarRegistro, cargarRegistro, observarRegistro } from './datos/registroLocal.js'
 import { registrarMarcacion } from './dominio/asistencia.js'
 import { darDeAltaEmpleado } from './dominio/empleados.js'
 import { leerVista, observarVista, VISTAS } from './navegacion.js'
 
-const panelesDeEmpleado = {
-  asistencia: {
-    id: 'titulo-marcaciones',
-    titulo: 'Marcaciones',
-    irA: 'Ir a marcaciones',
-    ayuda: 'Selecciona un empleado para marcar su entrada o salida.',
-  },
-  historial: {
-    id: 'titulo-historial',
-    titulo: 'Asistencias registradas',
-    irA: 'Ir al historial',
-    ayuda: 'Selecciona un empleado para consultar sus asistencias.',
-  },
-}
+const accesoHistorial = { id: 'titulo-historial', irA: 'Ir al historial' }
 
 function leerRegistroDisponible() {
   try {
@@ -39,7 +29,6 @@ export default function App() {
   const vistaAnterior = useRef(vista)
   const tituloVista = useRef(null)
   const empleadoSeleccionado = registro?.empleados.find(empleado => empleado.dni === dniSeleccionado)
-  const panelEmpleado = panelesDeEmpleado[vista]
 
   function recargarRegistro() {
     setRegistro(leerRegistroDisponible())
@@ -59,14 +48,21 @@ export default function App() {
     recargarRegistro()
   }
 
-  async function guardarMarcacion(tipo) {
-    const instante = new Date()
-    await actualizarRegistro(actual => registrarMarcacion(actual, {
-      tipo,
-      dniEmpleado: dniSeleccionado,
-      instante,
-    }))
+  async function guardarMarcacion({ tipo, instante, foto }) {
+    const fotoId = foto ? await guardarFoto(foto).catch(() => undefined) : undefined
+    try {
+      await actualizarRegistro(actual => registrarMarcacion(actual, {
+        tipo,
+        dniEmpleado: dniSeleccionado,
+        instante,
+        fotoId,
+      }))
+    } catch (error) {
+      if (fotoId) await eliminarFoto(fotoId).catch(() => {})
+      throw error
+    }
     recargarRegistro()
+    return Boolean(fotoId)
   }
 
   return (
@@ -74,7 +70,9 @@ export default function App() {
       <BarraLateral vista={vista} />
 
       <main className="contenedor contenido">
-        <h2 className="titulo-pagina" ref={tituloVista} tabIndex={-1}>{VISTAS[vista]}</h2>
+        <header className="cabecera-contenido">
+          <h2 className="titulo-pagina" ref={tituloVista} tabIndex={-1}>{VISTAS[vista]}</h2>
+        </header>
 
         {registro === null && (
           <div className="aviso-carga">
@@ -92,30 +90,40 @@ export default function App() {
           </div>
         )}
 
-        {panelEmpleado && registro && (
-          <div className="columnas-vista" key={vista}>
-            <BusquedaEmpleados
+        {vista === 'asistencia' && registro && (
+          <section className="panel panel--marcaciones" aria-labelledby="titulo-marcaciones">
+            <EncabezadoPanel id="titulo-marcaciones" icono="asistencia">Marcaciones</EncabezadoPanel>
+            <SelectorEmpleado
               empleados={registro.empleados}
-              dniSeleccionado={dniSeleccionado}
+              seleccionado={empleadoSeleccionado}
               onSeleccionar={setDniSeleccionado}
-              accesoSeleccion={panelEmpleado}
             />
-
-            {!empleadoSeleccionado && (
-              <section className="panel" aria-labelledby={panelEmpleado.id}>
-                <h3 id={panelEmpleado.id}>{panelEmpleado.titulo}</h3>
-                <p className="estado-vacio">{panelEmpleado.ayuda}</p>
-              </section>
-            )}
-            {empleadoSeleccionado && vista === 'asistencia' && (
+            {empleadoSeleccionado && (
               <AccionesMarcacion
                 key={empleadoSeleccionado.dni}
                 empleado={empleadoSeleccionado}
                 onMarcar={guardarMarcacion}
               />
             )}
-            {empleadoSeleccionado && vista === 'historial' && (
+          </section>
+        )}
+
+        {vista === 'historial' && registro && (
+          <div className="columnas-vista">
+            <BusquedaEmpleados
+              empleados={registro.empleados}
+              dniSeleccionado={dniSeleccionado}
+              onSeleccionar={setDniSeleccionado}
+              accesoSeleccion={accesoHistorial}
+            />
+
+            {empleadoSeleccionado ? (
               <HistorialEmpleado empleado={empleadoSeleccionado} marcaciones={registro.marcaciones} />
+            ) : (
+              <section className="panel" aria-labelledby={accesoHistorial.id}>
+                <EncabezadoPanel id={accesoHistorial.id} icono="historial">Asistencias registradas</EncabezadoPanel>
+                <p className="estado-vacio">Selecciona un empleado para consultar sus asistencias.</p>
+              </section>
             )}
           </div>
         )}

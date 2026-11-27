@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { buscarEmpleados } from '../dominio/empleados.js'
+import { buscarEmpleados, nombreCompleto } from '../dominio/empleados.js'
+import EncabezadoPanel, { Icono } from './EncabezadoPanel.jsx'
 
 export default function BusquedaEmpleados({ empleados, dniSeleccionado, onSeleccionar, accesoSeleccion }) {
   const [consulta, setConsulta] = useState('')
@@ -17,18 +18,23 @@ export default function BusquedaEmpleados({ empleados, dniSeleccionado, onSelecc
 
   return (
     <section className="panel" aria-labelledby="titulo-busqueda">
-      <h3 id="titulo-busqueda">{onSeleccionar ? 'Buscar personal' : 'Personal registrado'}</h3>
+      <EncabezadoPanel id="titulo-busqueda" icono={onSeleccionar ? 'buscar' : 'historial'}>
+        {onSeleccionar ? 'Buscar personal' : 'Personal registrado'}
+      </EncabezadoPanel>
 
       <div className="campo">
-        <label htmlFor="buscar-nombre">Nombre del empleado</label>
-        <input
-          className="control"
-          id="buscar-nombre"
-          type="search"
-          autoComplete="off"
-          value={consulta}
-          onChange={evento => setConsulta(evento.target.value)}
-        />
+        <label htmlFor="buscar-nombre">Nombres o apellidos</label>
+        <div className="entrada-busqueda">
+          <Icono tipo="buscar" />
+          <input
+            className="control"
+            id="buscar-nombre"
+            type="search"
+            autoComplete="off"
+            value={consulta}
+            onChange={evento => setConsulta(evento.target.value)}
+          />
+        </div>
       </div>
 
       <div className="resultados-resumen">
@@ -47,11 +53,13 @@ export default function BusquedaEmpleados({ empleados, dniSeleccionado, onSelecc
       {cantidad > 0 && (
         <ListaResultados className="resultados" role={onSeleccionar ? undefined : 'list'}>
           {onSeleccionar && <legend className="solo-lectores">Seleccionar empleado</legend>}
-          {resultados.map(({ nombre, dni }) => {
+          {resultados.map(empleado => {
+            const { dni, puesto } = empleado
             const datos = (
               <span className="empleado__datos">
-                <strong>{nombre}</strong>
+                <strong>{nombreCompleto(empleado)}</strong>
                 <span className="empleado__dni">DNI {dni}</span>
+                {typeof puesto === 'string' && puesto.trim() && <span className="empleado__puesto">{puesto}</span>}
               </span>
             )
 
@@ -77,7 +85,7 @@ export default function BusquedaEmpleados({ empleados, dniSeleccionado, onSelecc
 
       {seleccionado && !resultados.includes(seleccionado) && (
         <p className="seleccion-oculta">
-          Selección actual <strong>{seleccionado.nombre}</strong> · DNI {seleccionado.dni}
+          Selección actual <strong>{nombreCompleto(seleccionado)}</strong> · DNI {seleccionado.dni}
         </p>
       )}
     </section>

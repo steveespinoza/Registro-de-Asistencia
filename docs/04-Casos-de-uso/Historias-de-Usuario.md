@@ -4,13 +4,13 @@ Todas las historias corresponden al [[Rol-Administrador]], único actor del MVP.
 
 ## HU-01 · Dar de alta a un empleado
 
-Como administrador, quiero registrar el nombre y DNI de un empleado para identificarlo al momento de marcar su asistencia.
+Como administrador, quiero registrar los nombres, apellidos y DNI de un empleado para identificarlo y anotar su puesto cuando corresponda.
 
 **Criterios de aceptación**
 
 - Cuando abro la demo desde el navegador, puedo comenzar un alta directamente, sin iniciar sesión.
-- Si ingreso un nombre y un DNI que todavía no está registrado, el sistema guarda al empleado. Puede haber dos empleados con el mismo nombre si tienen DNI distintos.
-- Si falta el nombre o el DNI, o si el DNI ya está registrado, el sistema explica el motivo y rechaza el alta.
+- Si ingreso los nombres, apellidos y un DNI nuevo, el sistema guarda al empleado. También guarda el puesto si lo ingreso.
+- Si falta un campo obligatorio o si el DNI ya está registrado, el sistema explica el motivo y rechaza el alta.
 
 **Requisitos relacionados** · RF-01 y RF-02.
 
@@ -22,7 +22,8 @@ Como administrador, quiero buscar por nombre para encontrar al empleado cuya asi
 
 **Criterios de aceptación**
 
-- Cuando busco por nombre, cada resultado muestra el nombre y el DNI.
+- Cuando busco por nombres o apellidos, cada resultado muestra el nombre completo y el DNI.
+- En **Asistencia**, las coincidencias aparecen en un desplegable desde la segunda letra, sin distinguir mayúsculas ni tildes. Al elegir a la persona, puedo marcar en el mismo panel.
 - Si dos empleados comparten el nombre, ambos aparecen en los resultados. Puedo distinguirlos por DNI y seleccionar el registro correcto.
 
 **Requisito relacionado** · RF-03.

@@ -10,21 +10,21 @@ La aplicación debe abrir directamente desde el navegador, sin inicio de sesión
 
 ## RF-02 · Dar de alta a un empleado
 
-El administrador debe poder registrar a un empleado con su nombre y DNI. Ambos datos son obligatorios y el DNI identifica de forma única el registro.
+El administrador registra al empleado con nombres, apellidos y DNI en campos separados. Estos datos son obligatorios. El puesto es opcional y el DNI identifica de forma única el registro.
 
-**Criterio de aceptación.** Se pueden guardar dos empleados con el mismo nombre y distintos DNI. Si falta el nombre o el DNI, o si el DNI ya está registrado, la aplicación informa el motivo y el alta se rechaza.
+**Criterio de aceptación.** Se pueden guardar dos empleados con los mismos nombres y apellidos si tienen distintos DNI. Si falta un campo obligatorio o el DNI ya está registrado, la aplicación informa el motivo y rechaza el alta. El puesto, cuando se completa, aparece en el listado de personal.
 
 ## RF-03 · Buscar y seleccionar a un empleado
 
-El administrador debe poder buscar al personal registrado por nombre en **Asistencia** y **Historial**. Cada resultado debe mostrar el nombre y el DNI para que pueda seleccionar el registro correcto.
+El administrador puede buscar al personal por nombres o apellidos en **Registro**, **Asistencia** e **Historial**. La búsqueda ignora mayúsculas y tildes. Cada resultado muestra el nombre completo y el DNI para identificar al empleado.
 
-**Criterio de aceptación.** Si dos empleados comparten un nombre, la búsqueda devuelve ambos y permite seleccionarlos por separado.
+**Criterio de aceptación.** En **Asistencia**, las coincidencias se muestran en un desplegable desde la segunda letra. Si dos empleados comparten un nombre, aparecen ambos y se pueden seleccionar por separado. Al elegir uno, los controles de marcación aparecen en el mismo panel.
 
 ## RF-04 · Registrar una entrada o salida
 
-En **Asistencia**, el administrador selecciona al empleado y registra el evento como entrada o salida en el momento. La aplicación debe asociar cada marcación al DNI del empleado seleccionado.
+En **Asistencia**, el administrador selecciona al empleado, elige **Entrada** o **Salida** y pulsa **Marcar Asistencia** para guardar. La aplicación debe asociar cada marcación al DNI del empleado seleccionado.
 
-**Criterio de aceptación.** Al registrar una entrada y luego una salida en la misma fecha de Lima, ambas quedan vinculadas al empleado elegido y cada una conserva su tipo.
+**Criterio de aceptación.** Cambiar entre **Entrada** y **Salida** solo cambia el tipo seleccionado. Al confirmar cada marcación en la misma fecha de Lima con **Marcar Asistencia**, ambas quedan vinculadas al empleado elegido y conservan su tipo.
 
 ## RF-05 · Capturar y mostrar la fecha y hora
 
@@ -55,3 +55,9 @@ Para cada empleado y fecha de Lima (`America/Lima`), la aplicación permite regi
 - Si se intenta registrar una segunda salida para el mismo DNI y fecha, la aplicación avisa y conserva la salida original.
 - Si el empleado solo marcó su entrada en una fecha, al cambiar de día en Lima esa marcación queda incompleta en el historial y la fecha no cuenta como asistencia.
 - Al día siguiente, el sistema rechaza una salida sin una entrada abierta de la nueva fecha y permite empezar el día con una nueva entrada.
+
+## RF-09 · Adjuntar una foto opcional
+
+El administrador puede activar la cámara desde **Asistencia**. Mientras esté activa, la aplicación toma una foto al pulsar **Marcar Asistencia**. En celular solicita la trasera por defecto y permite cambiar a la frontal. Si la cámara está apagada, no hay permiso o la foto no puede capturarse o guardarse, el administrador puede completar la marcación.
+
+**Criterio de aceptación.** Desde una página con acceso a la cámara, activa la cámara trasera, registra una entrada, cambia a la frontal y registra la salida. Tras recargar, cada foto aparece en la marcación correspondiente de **Historial**. Con la cámara apagada o sin permiso, una marcación válida también se guarda.

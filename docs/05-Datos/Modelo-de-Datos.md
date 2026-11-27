@@ -7,7 +7,11 @@ El MVP guarda empleados y marcaciones en el navegador. El DNI identifica a cada 
 | Campo | Tipo | Regla |
 | --- | --- | --- |
 | `dni` | Texto | Obligatorio y único. Se guarda como texto para conservar los ceros iniciales. |
-| `nombre` | Texto | Obligatorio. Se usa para buscar y puede repetirse entre empleados. |
+| `nombres` | Texto | Obligatorio en las altas nuevas. Se usa para buscar. |
+| `apellidos` | Texto | Obligatorio en las altas nuevas. Se usa para buscar. |
+| `puesto` | Texto | Opcional. Se omite cuando el campo se deja vacío. |
+
+La aplicación muestra el nombre completo a partir de los nombres y apellidos. Los registros anteriores conservan su campo `nombre` y siguen disponibles para la búsqueda y la consulta.
 
 ## Marcación
 
@@ -18,6 +22,7 @@ El MVP guarda empleados y marcaciones en el navegador. El DNI identifica a cada 
 | `tipo` | Texto | Obligatorio. Acepta `ENTRADA` o `SALIDA`. |
 | `instanteUtc` | Texto | Obligatorio. La aplicación captura el instante al marcar y lo guarda en formato ISO 8601 en UTC, con sufijo `Z`. |
 | `entradaId` | Texto | Obligatorio en una `SALIDA`. Contiene el `id` de la entrada que cierra. En una `ENTRADA` se omite el campo. |
+| `fotoId` | Texto | Opcional. Identifica la foto local asociada con la marcación. Se omite cuando la marcación se registra sin foto. |
 
 ## Reglas de asistencia
 
@@ -35,6 +40,8 @@ El modelo usa un objeto JSON con las colecciones `empleados` y `marcaciones`, gu
 
 La aplicación comprueba que se cumplan las reglas del modelo antes de guardar. Confirma el alta o la marcación una vez guardado el objeto. Si falla la escritura, informa el error y conserva los datos ya guardados. [[Requisitos Funcionales#RF-07 · Conservar los datos en el navegador|Guardado local]] · [[Requisitos-No-Funcionales#RNF-05 · Fiabilidad del guardado local|Fiabilidad del guardado]]
 
+Las fotos se guardan como imágenes JPEG en IndexedDB, en la colección `fotos` de la base `registro-asistencia-fotos`. La marcación conserva solo su identificador `fotoId`. Si falla el guardado de la foto, la marcación puede completarse sin ella. Las marcaciones anteriores siguen disponibles en el historial. [[Requisitos Funcionales#RF-09 · Adjuntar una foto opcional|Foto opcional]]
+
 ## Ejemplo con datos ficticios
 
 ```json
@@ -42,7 +49,9 @@ La aplicación comprueba que se cumplan las reglas del modelo antes de guardar. 
   "empleados": [
     {
       "dni": "00001234",
-      "nombre": "Alex Ejemplo"
+      "nombres": "Alex",
+      "apellidos": "Ejemplo",
+      "puesto": "Auxiliar administrativo"
     }
   ],
   "marcaciones": [

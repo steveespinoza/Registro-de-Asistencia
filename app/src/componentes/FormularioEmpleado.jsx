@@ -1,5 +1,13 @@
 import { useState } from 'react'
 import { ErrorAltaEmpleado } from '../dominio/empleados.js'
+import EncabezadoPanel from './EncabezadoPanel.jsx'
+
+const CAMPOS_ALTA = [
+  { campo: 'nombres', etiqueta: 'Nombres', requerido: true },
+  { campo: 'apellidos', etiqueta: 'Apellidos', requerido: true },
+  { campo: 'dni', etiqueta: 'DNI', requerido: true, inputMode: 'numeric' },
+  { campo: 'puesto', etiqueta: 'Puesto (opcional)' },
+]
 
 export default function FormularioEmpleado({ disponible, onGuardar }) {
   const [error, setError] = useState(null)
@@ -37,38 +45,31 @@ export default function FormularioEmpleado({ disponible, onGuardar }) {
   }
 
   return (
-    <section className="panel" aria-labelledby="titulo-alta">
-      <h3 id="titulo-alta">Registrar empleado</h3>
+    <section className="panel panel--alta" aria-labelledby="titulo-alta">
+      <EncabezadoPanel id="titulo-alta" icono="registro">Registrar empleado</EncabezadoPanel>
 
       <form className="formulario" onSubmit={enviarAlta} onChange={limpiarMensajes} noValidate>
-        <div className="campo">
-          <label htmlFor="nombre">Nombre completo</label>
-          <input
-            className="control"
-            id="nombre"
-            name="nombre"
-            autoComplete="off"
-            required
-            readOnly={guardando}
-            aria-invalid={error?.campo === 'nombre'}
-            aria-describedby={error?.campo === 'nombre' ? 'error-alta' : undefined}
-          />
-        </div>
-
-        <div className="campo">
-          <label htmlFor="dni">DNI</label>
-          <input
-            className="control"
-            id="dni"
-            name="dni"
-            type="text"
-            inputMode="numeric"
-            autoComplete="off"
-            required
-            readOnly={guardando}
-            aria-invalid={error?.campo === 'dni'}
-            aria-describedby={error?.campo === 'dni' ? 'error-alta' : undefined}
-          />
+        <div className="campos-formulario">
+          {CAMPOS_ALTA.map(({ campo, etiqueta, requerido, inputMode }) => {
+            const invalido = error?.campo === campo
+            return (
+              <div className="campo" key={campo}>
+                <label htmlFor={campo}>{etiqueta}</label>
+                <input
+                  className="control"
+                  id={campo}
+                  name={campo}
+                  type="text"
+                  inputMode={inputMode}
+                  autoComplete="off"
+                  required={requerido}
+                  readOnly={guardando}
+                  aria-invalid={invalido}
+                  aria-describedby={invalido ? 'error-alta' : undefined}
+                />
+              </div>
+            )
+          })}
         </div>
 
         <button

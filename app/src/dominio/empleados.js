@@ -5,12 +5,27 @@ export class ErrorAltaEmpleado extends Error {
   }
 }
 
-export function darDeAltaEmpleado(registro, campos) {
-  const nombre = campos.nombre.trim()
-  const dni = campos.dni.trim()
+function texto(valor) {
+  return typeof valor === 'string' ? valor.trim() : ''
+}
 
-  if (!nombre) {
-    throw new ErrorAltaEmpleado('nombre', 'Ingresa el nombre del empleado.')
+export function nombreCompleto(empleado) {
+  const nombres = texto(empleado.nombres)
+  const apellidos = texto(empleado.apellidos)
+  return nombres && apellidos ? `${nombres} ${apellidos}` : texto(empleado.nombre)
+}
+
+export function darDeAltaEmpleado(registro, campos) {
+  const nombres = texto(campos.nombres)
+  const apellidos = texto(campos.apellidos)
+  const dni = texto(campos.dni)
+  const puesto = texto(campos.puesto)
+
+  if (!nombres) {
+    throw new ErrorAltaEmpleado('nombres', 'Ingresa los nombres del empleado.')
+  }
+  if (!apellidos) {
+    throw new ErrorAltaEmpleado('apellidos', 'Ingresa los apellidos del empleado.')
   }
   if (!dni) {
     throw new ErrorAltaEmpleado('dni', 'Ingresa el DNI del empleado.')
@@ -19,7 +34,9 @@ export function darDeAltaEmpleado(registro, campos) {
     throw new ErrorAltaEmpleado('dni', 'Ese DNI ya está registrado.')
   }
 
-  return { ...registro, empleados: [...registro.empleados, { nombre, dni }] }
+  const empleado = { dni, nombres, apellidos }
+  if (puesto) empleado.puesto = puesto
+  return { ...registro, empleados: [...registro.empleados, empleado] }
 }
 
 function normalizarBusqueda(texto) {
@@ -28,5 +45,5 @@ function normalizarBusqueda(texto) {
 
 export function buscarEmpleados(empleados, consulta) {
   const nombreBuscado = normalizarBusqueda(consulta)
-  return empleados.filter(empleado => normalizarBusqueda(empleado.nombre).includes(nombreBuscado))
+  return empleados.filter(empleado => normalizarBusqueda(nombreCompleto(empleado)).includes(nombreBuscado))
 }

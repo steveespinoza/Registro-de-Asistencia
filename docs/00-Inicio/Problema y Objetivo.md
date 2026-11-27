@@ -20,11 +20,11 @@ Desarrollar una aplicación web para que el administrador pueda dar de alta al p
 
 ## Usuario y alcance de la demo
 
-El administrador es el único usuario de la demo y accede directamente, sin iniciar sesión. Da de alta al personal con su nombre y DNI. Para registrar una entrada o salida o consultar el historial, busca al empleado por nombre y lo selecciona en los resultados. Si hay nombres iguales, usa el DNI mostrado para distinguirlos. Los empleados figuran en el registro de personal y en el historial de asistencia.
+El administrador es el único usuario de la demo y accede directamente, sin iniciar sesión. Da de alta al personal con nombres, apellidos y DNI, y puede indicar el puesto. Para registrar una entrada o salida o consultar el historial, busca por nombres o apellidos y elige al empleado por su DNI. Los empleados figuran en el registro de personal y en el historial de asistencia.
 
 La demo cubre las marcaciones hechas en el momento. La recuperación de marcaciones olvidadas y la corrección de errores se reservan para una eventual ampliación del alcance.
 
-La primera versión se plantea como una aplicación web estática con React, Vite y CSS. Los datos se guardarán en el almacenamiento local del navegador (`localStorage`). Esto permite demostrar el flujo desde un mismo navegador. La hora capturada depende del reloj del dispositivo y cada navegador conserva su propio registro.
+La demo es una aplicación web estática con React, Vite y CSS. Cada navegador conserva su propio registro de personal y marcaciones en `localStorage` y sus fotos opcionales en IndexedDB. La hora capturada depende del reloj del dispositivo.
 
 ## Criterios de éxito
 

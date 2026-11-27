@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { VISTAS } from '../navegacion.js'
+import { Icono } from './EncabezadoPanel.jsx'
 
 function EnlacesNavegacion({ vista, alElegir }) {
   return (
@@ -11,6 +12,7 @@ function EnlacesNavegacion({ vista, alElegir }) {
           aria-current={vista === id ? 'page' : undefined}
           onClick={alElegir}
         >
+          <Icono tipo={id} />
           {nombre}
         </a>
       ))}

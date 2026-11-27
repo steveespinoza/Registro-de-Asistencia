@@ -1,4 +1,5 @@
 import { ENTRADA, SALIDA } from '../dominio/asistencia.js'
+import { nombreCompleto } from '../dominio/empleados.js'
 
 const CLAVE_REGISTRO = 'registro-asistencia'
 
@@ -25,7 +26,7 @@ export function cargarRegistro() {
   const dnis = new Set()
   for (const empleado of registro.empleados) {
     const dni = typeof empleado?.dni === 'string' ? empleado.dni.trim() : ''
-    if (!dni || dnis.has(dni) || typeof empleado.nombre !== 'string' || !empleado.nombre.trim()) {
+    if (!dni || dnis.has(dni) || !nombreCompleto(empleado)) {
       throw new Error('El registro guardado contiene datos de personal inválidos.')
     }
     dnis.add(dni)

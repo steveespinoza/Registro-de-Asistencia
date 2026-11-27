@@ -4,7 +4,7 @@ El administrador opera la demo desde el navegador. Su trabajo consiste en identi
 
 ## Dar de alta al personal
 
-El administrador ingresa el nombre y el DNI del empleado. Dos personas pueden compartir el mismo nombre si sus DNI son distintos. Si el DNI ya está registrado, el sistema rechaza el alta.
+El administrador ingresa los nombres, apellidos y DNI del empleado. Puede agregar su puesto. Dos personas pueden compartir el mismo nombre si sus DNI son distintos. Si el DNI ya está registrado, el sistema rechaza el alta.
 
 ## Registrar una entrada o salida
 

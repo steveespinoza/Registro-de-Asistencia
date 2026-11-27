@@ -21,7 +21,7 @@ function siguienteId(marcaciones) {
   return `m-${numero}`
 }
 
-export function registrarMarcacion(registro, { dniEmpleado, tipo, instante }) {
+export function registrarMarcacion(registro, { dniEmpleado, tipo, instante, fotoId }) {
   if (tipo !== ENTRADA && tipo !== SALIDA) {
     throw new TypeError('Tipo de marcación inválido.')
   }
@@ -53,6 +53,7 @@ export function registrarMarcacion(registro, { dniEmpleado, tipo, instante }) {
     instanteUtc: instante.toISOString(),
   }
   if (tipo === SALIDA) marcacion.entradaId = entradaDelDia.id
+  if (fotoId) marcacion.fotoId = fotoId
 
   return { ...registro, marcaciones: [...registro.marcaciones, marcacion] }
 }
@@ -79,11 +80,12 @@ export function historialPorDia(marcaciones, dniEmpleado, fechaActual) {
       cuentaComoAsistencia: cerradas.size > 0,
       diaTerminado,
       movimientos: movimientos.reverse().sort((a, b) => b.timestamp - a.timestamp)
-        .map(({ id, tipo, instanteUtc, hora }) => ({
+        .map(({ id, tipo, instanteUtc, hora, fotoId }) => ({
           id,
           tipo,
           instanteUtc,
           hora,
+          fotoId: typeof fotoId === 'string' ? fotoId : undefined,
           estado: tipo === ENTRADA && !cerradas.has(id) ? estadoSinSalida : null,
         })),
     }
