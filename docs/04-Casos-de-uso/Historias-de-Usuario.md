@@ -35,9 +35,9 @@ Como administrador, quiero marcar la entrada al momento en que llega el empleado
 
 **Criterios de aceptación**
 
-- Con el empleado seleccionado y sin otra entrada abierta en esa fecha de Lima, al marcar la entrada el sistema la guarda asociada a su DNI y captura la fecha y hora automáticamente.
+- Si el empleado seleccionado aún carece de una entrada en esa fecha de Lima, el sistema guarda la marcación asociada a su DNI y captura la fecha y hora automáticamente.
 - Aunque el dispositivo esté configurado en otra zona horaria, la marca se muestra con fecha y hora de Lima, incluidos los segundos.
-- Si ya existe una entrada abierta del mismo empleado para esa fecha, el sistema avisa y rechaza la segunda entrada.
+- Si el empleado ya tiene una entrada para esa fecha, el sistema avisa y rechaza la segunda, incluso después de guardar la salida.
 
 **Requisitos relacionados** · RF-04, RF-05 y RF-08.
 
@@ -50,6 +50,7 @@ Como administrador, quiero marcar la salida cuando se retira el empleado para co
 **Criterios de aceptación**
 
 - Si el empleado tiene una entrada abierta de la misma fecha de Lima, la salida se guarda con su DNI y la fecha y hora del momento. El día cuenta como asistencia.
+- Si ya guardó una salida en esa fecha, el sistema avisa y rechaza la segunda.
 - Si el empleado carece de una entrada abierta para esa fecha, el sistema avisa y rechaza la salida.
 
 **Requisitos relacionados** · RF-04, RF-05 y RF-08.

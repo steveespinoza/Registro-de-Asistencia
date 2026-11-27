@@ -21,8 +21,8 @@ flowchart LR
 
 ## Reglas de la marcación
 
-- **Entrada.** Se acepta cuando el empleado no tiene otra entrada abierta en la fecha de Lima.
-- **Salida.** Se acepta cuando hay una entrada abierta del mismo empleado en esa fecha. El par completo cuenta como asistencia de ese día.
+- **Entrada.** Se acepta si el empleado aún carece de una entrada en la fecha de Lima.
+- **Salida.** Se acepta si el empleado tiene una entrada abierta en esa fecha y puede registrar su primera salida del día. El par completo cuenta como asistencia de ese día.
 - **Cambio de fecha.** La entrada sin salida queda incompleta en el historial. Al día siguiente se puede marcar una nueva entrada.
 
 [[Diagrama-General|Diagrama general]] · [[Requisitos Funcionales#RF-08 · Validar la asistencia por día|Regla de asistencia por día]].

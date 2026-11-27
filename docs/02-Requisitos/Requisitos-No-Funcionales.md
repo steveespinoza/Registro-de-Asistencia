@@ -4,7 +4,7 @@ Estos requisitos establecen las condiciones de uso y verificación de la demo de
 
 ## RNF-01 · Diseño mobile-first
 
-El flujo del administrador debe diseñarse primero para celular en orientación vertical y adaptarse a pantallas más amplias. Los formularios, la búsqueda, las acciones de marcación y el historial deben poder usarse mediante controles táctiles.
+El flujo del administrador debe diseñarse primero para celular en orientación vertical y adaptarse a pantallas más amplias. El menú lateral, los formularios, la búsqueda, las acciones de marcación y el historial deben poder usarse mediante controles táctiles.
 
 **Criterio de aceptación.** En una pantalla de 360 px de ancho se puede dar de alta a una persona, buscarla, marcar su entrada y salida y consultar su historial sin desplazamiento horizontal ni elementos que tapen las acciones. El flujo sigue disponible en escritorio.
 

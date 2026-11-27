@@ -37,15 +37,20 @@ function estadoDelDia(dia) {
   return 'Asistencia pendiente'
 }
 
-export default function HistorialEmpleado({ dniEmpleado, marcaciones }) {
+export default function HistorialEmpleado({ empleado, marcaciones }) {
   const fechaActual = useFechaLima()
-  const dias = historialPorDia(marcaciones, dniEmpleado, fechaActual)
+  const dias = historialPorDia(marcaciones, empleado.dni, fechaActual)
 
   return (
     <section className="panel" aria-labelledby="titulo-historial">
       <div className="historial-encabezado">
-        <h3 id="titulo-historial">Historial</h3>
+        <h3 id="titulo-historial" tabIndex={-1}>Asistencias registradas</h3>
         <p>Hora de Lima</p>
+      </div>
+
+      <div className="empleado__datos historial-empleado">
+        <strong>{empleado.nombre}</strong>
+        <span className="empleado__dni">DNI {empleado.dni}</span>
       </div>
 
       {dias.length === 0 && <p className="estado-vacio">Este empleado todavía no tiene marcaciones.</p>}

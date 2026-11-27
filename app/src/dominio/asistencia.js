@@ -34,13 +34,15 @@ export function registrarMarcacion(registro, { dniEmpleado, tipo, instante }) {
     marcacion.dniEmpleado === dniEmpleado
     && fechaHoraLima(new Date(marcacion.instanteUtc)).fecha === fecha,
   )
-  const cerradas = entradasCerradas(marcacionesDelDia)
-  const abierta = marcacionesDelDia.find(marcacion => marcacion.tipo === ENTRADA && !cerradas.has(marcacion.id))
+  const entradaDelDia = marcacionesDelDia.find(marcacion => marcacion.tipo === ENTRADA)
 
-  if (tipo === ENTRADA && abierta) {
-    throw new ErrorMarcacion('Ya hay una entrada abierta para este empleado en la fecha de Lima.')
+  if (tipo === ENTRADA && entradaDelDia) {
+    throw new ErrorMarcacion('Ya hay una entrada registrada para este empleado en la fecha de Lima.')
   }
-  if (tipo === SALIDA && !abierta) {
+  if (tipo === SALIDA && marcacionesDelDia.some(marcacion => marcacion.tipo === SALIDA)) {
+    throw new ErrorMarcacion('Ya hay una salida registrada para este empleado en la fecha de Lima.')
+  }
+  if (tipo === SALIDA && !entradaDelDia) {
     throw new ErrorMarcacion('No hay una entrada abierta para este empleado en la fecha de Lima.')
   }
 
@@ -50,7 +52,7 @@ export function registrarMarcacion(registro, { dniEmpleado, tipo, instante }) {
     tipo,
     instanteUtc: instante.toISOString(),
   }
-  if (tipo === SALIDA) marcacion.entradaId = abierta.id
+  if (tipo === SALIDA) marcacion.entradaId = entradaDelDia.id
 
   return { ...registro, marcaciones: [...registro.marcaciones, marcacion] }
 }
