@@ -23,7 +23,7 @@ Después de recargar, el administrador puede volver a buscar a un empleado y con
 
 ```mermaid
 flowchart TD
-    A["Abrir Registro e ingresar nombre y DNI"] --> B{"¿Están completos y el DNI es nuevo?"}
+    A["Ingresar nombres, apellidos y DNI. Añadir puesto si corresponde"] --> B{"¿Están los campos obligatorios y el DNI es nuevo?"}
     B -->|No| C["Indicar el campo faltante o el DNI duplicado"]
     C --> A
     B -->|Sí| D["Intentar guardar el empleado"]
@@ -39,7 +39,7 @@ Después del alta, el empleado aparece en **Personal registrado** y queda dispon
 ```mermaid
 flowchart TD
     S["Abrir Asistencia o Historial"] --> A
-    A["Buscar al empleado por nombre"] --> B{"¿Hay coincidencias?"}
+    A["Buscar al empleado por nombres o apellidos"] --> B{"¿Hay coincidencias?"}
     B -->|No| C["Mostrar aviso y permitir otra búsqueda"]
     C --> A
     B -->|Sí| D["Mostrar nombre y DNI de cada coincidencia"]
@@ -49,14 +49,18 @@ flowchart TD
     F -->|Asistencia| H["Continuar al flujo de marcación"]
 ```
 
-El historial muestra el tipo, la fecha y la hora de Lima con segundos. Si el empleado aún carece de marcaciones, la aplicación indica que su historial está vacío. [[HU-02.Buscar y seleccionar a un empleado|Historia de búsqueda]] · [[HU-06.Consultar el historial de un empleado|Historia de consulta]]
+En **Asistencia**, el desplegable muestra coincidencias desde la segunda letra. Al elegir a una persona, sus controles de marcación aparecen debajo del buscador. Si se edita el nombre, se debe volver a elegir un DNI. [[HU-02.Buscar y seleccionar a un empleado|Historia de búsqueda]]
+
+El historial muestra el tipo, la fecha y la hora de Lima con segundos. Si el empleado aún carece de marcaciones, la aplicación indica que su historial está vacío. [[HU-06.Consultar el historial de un empleado|Historia de consulta]]
 
 ## Marcar entrada o salida
 
 ```mermaid
 flowchart TD
-    A["Elegir entrada o salida para el DNI seleccionado"] --> B["Capturar el instante en UTC y obtener la fecha de Lima"]
-    B --> C{"Tipo de marcación"}
+    A["Elegir Entrada o Salida para el DNI seleccionado"] --> T["Pulsar Marcar Asistencia"]
+    T --> B["Capturar el instante en UTC y obtener la fecha de Lima"]
+    B --> P["Capturar una foto si la cámara está activa"]
+    P --> C{"Tipo de marcación"}
     C -->|Entrada| D{"¿Ya se registró una entrada en esa fecha?"}
     C -->|Salida| E{"¿Ya se registró una salida en esa fecha?"}
     D -->|Sí| F["Avisar y rechazar la entrada duplicada"]
@@ -73,6 +77,8 @@ flowchart TD
 ```
 
 El límite de una entrada y una salida se aplica al DNI seleccionado y a la fecha de Lima calculada al marcar. Al guardar una salida válida, el par cuenta como asistencia de ese día. [[HU-03.Marcar una entrada|Historia de entrada]] · [[HU-04.Marcar una salida|Historia de salida]]
+
+Si la cámara está activa, se toma la foto al pulsar **Marcar Asistencia**. En celular se solicita primero la cámara trasera y el administrador puede alternar a la frontal. Si la cámara está desactivada o falla la captura o el guardado de la foto, se registra la marcación sin foto. Las fotos guardadas se abren desde el movimiento correspondiente en **Historial**. [[Requisitos Funcionales#RF-09 · Adjuntar una foto opcional]]
 
 ## Cambio de fecha en Lima
 

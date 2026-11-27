@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react'
 import { ENTRADA, historialPorDia } from '../dominio/asistencia.js'
+import { nombreCompleto } from '../dominio/empleados.js'
 import { fechaHoraLima } from '../dominio/tiempoLima.js'
+import EncabezadoPanel from './EncabezadoPanel.jsx'
+import FotoMarcacion from './FotoMarcacion.jsx'
 
 function useFechaLima() {
   const [fecha, setFecha] = useState(() => fechaHoraLima(new Date()).fecha)
@@ -43,13 +46,12 @@ export default function HistorialEmpleado({ empleado, marcaciones }) {
 
   return (
     <section className="panel" aria-labelledby="titulo-historial">
-      <div className="historial-encabezado">
-        <h3 id="titulo-historial" tabIndex={-1}>Asistencias registradas</h3>
-        <p>Hora de Lima</p>
-      </div>
+      <EncabezadoPanel id="titulo-historial" icono="historial" detalle="Hora de Lima" enfocable>
+        Asistencias registradas
+      </EncabezadoPanel>
 
-      <div className="empleado__datos historial-empleado">
-        <strong>{empleado.nombre}</strong>
+      <div className="empleado__datos ficha-empleado historial-empleado">
+        <strong>{nombreCompleto(empleado)}</strong>
         <span className="empleado__dni">DNI {empleado.dni}</span>
       </div>
 
@@ -59,19 +61,25 @@ export default function HistorialEmpleado({ empleado, marcaciones }) {
         <div className="historial-dia" key={dia.fecha}>
           <div className="historial-dia__encabezado">
             <h4><time dateTime={dia.fecha}>{dia.fecha.split('-').reverse().join('/')}</time></h4>
-            <span className={dia.cuentaComoAsistencia ? 'estado-dia estado-dia--asistencia' : 'estado-dia'}>
+            <span
+              className="estado-dia"
+              data-estado={dia.cuentaComoAsistencia ? 'asistencia' : dia.diaTerminado ? 'sin-asistencia' : 'pendiente'}
+            >
               {estadoDelDia(dia)}
             </span>
           </div>
 
           <ul className="movimientos">
-            {dia.movimientos.map(({ id, tipo, instanteUtc, hora, estado }) => (
+            {dia.movimientos.map(({ id, tipo, instanteUtc, hora, estado, fotoId }) => (
               <li className="movimiento" key={id}>
                 <div>
                   <strong>{tipo === ENTRADA ? 'Entrada' : 'Salida'}</strong>
-                  {estado && <span className="movimiento__estado">{estado}</span>}
+                  {estado && <span className="movimiento__estado" data-incompleta={estado === 'Incompleta'}>{estado}</span>}
                 </div>
                 <time dateTime={instanteUtc}>{hora}</time>
+                {fotoId && (
+                  <FotoMarcacion fotoId={fotoId} descripcion={tipo === ENTRADA ? 'Foto de entrada' : 'Foto de salida'} />
+                )}
               </li>
             ))}
           </ul>

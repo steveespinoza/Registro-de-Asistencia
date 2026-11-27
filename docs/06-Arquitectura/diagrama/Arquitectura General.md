@@ -13,10 +13,12 @@ flowchart TB
         logica["Lógica en JavaScript<br/>Personal, asistencia e historial"]
         tiempo["Fecha y hora<br/>Reloj del dispositivo, UTC y America/Lima"]
         datos[("localStorage<br/>Empleados y marcaciones en JSON")]
+        fotos[("IndexedDB<br/>Fotos de las marcaciones")]
 
         interfaz <-->|Acciones y resultados| logica
         logica -->|Captura y conversión horaria| tiempo
         logica <-->|Lectura y escritura| datos
+        logica <-->|Foto opcional| fotos
     end
 
     vite -->|Genera HTML, JS y CSS| sitio
@@ -28,6 +30,6 @@ flowchart TB
 
 - **Carga.** Vite genera los archivos de producción. El alojamiento estático los entrega y la aplicación recupera los registros disponibles en el navegador.
 - **Operación.** La interfaz recibe las acciones del administrador. JavaScript valida el DNI único y las reglas de entrada y salida. La aplicación obtiene la hora del dispositivo, guarda el instante en UTC y calcula el día de asistencia en `America/Lima`.
-- **Persistencia.** Los empleados y las marcaciones se guardan en `localStorage` del navegador. La aplicación confirma las escrituras exitosas y recupera los datos al recargar la demo en el mismo navegador.
+- **Persistencia.** Los empleados y las marcaciones se guardan en `localStorage`. Las fotos opcionales se guardan en IndexedDB y se recuperan desde el historial en el mismo navegador.
 
 [[Alcance-MVP|Alcance del MVP]] · [[Modelo-de-Datos|Modelo de datos]] · [[Requisitos-No-Funcionales|Requisitos no funcionales]].

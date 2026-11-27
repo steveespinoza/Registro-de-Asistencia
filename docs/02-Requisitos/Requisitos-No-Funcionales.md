@@ -40,6 +40,6 @@ La conversión de la hora y la identificación del día de asistencia deben usar
 
 ## RNF-07 · Privacidad de los datos
 
-El nombre, el DNI y el historial de asistencia deben permanecer en el almacenamiento local del navegador. Las pruebas deben usar datos ficticios.
+Los datos del personal, el historial y las fotos de las marcaciones deben permanecer en el almacenamiento local del navegador. La cámara se activa a petición del administrador y se libera al salir de la pantalla de marcación o cambiar de empleado. Las pruebas deben usar datos e imágenes ficticios.
 
-**Criterio de aceptación.** Al revisar las solicitudes de red durante el alta, la búsqueda y la marcación, los nombres, DNI y registros de asistencia de prueba permanecen en el navegador.
+**Criterio de aceptación.** Al revisar las solicitudes de red durante el alta, la búsqueda y la marcación, los datos del personal, las marcaciones y las fotos de prueba permanecen en el navegador.
