@@ -22,8 +22,9 @@ El MVP guarda empleados y marcaciones en el navegador. El DNI identifica a cada 
 ## Reglas de asistencia
 
 - La aplicación deriva la fecha de asistencia y la hora visible desde `instanteUtc` usando `America/Lima`. El historial muestra la hora con segundos.
+- Para nuevas marcaciones, cada combinación de DNI, fecha de Lima y tipo admite un solo registro. La aplicación conserva en el historial las marcaciones que ya se habían guardado con la regla anterior.
 - Una salida cierra una entrada previamente guardada, abierta y del mismo DNI en la misma fecha de Lima. El mismo `entradaId` puede aparecer en una sola salida.
-- Una entrada sin salida sigue abierta durante su fecha de Lima. Mientras siga abierta, se rechaza otra entrada para ese empleado en esa fecha.
+- Una entrada sin salida sigue abierta durante su fecha de Lima.
 - Al cambiar la fecha de Lima, la entrada sin salida se muestra como incompleta. El administrador puede registrar una nueva entrada. El día cuenta como asistencia si existe al menos un par de entrada y salida en esa fecha.
 
 El estado de cada entrada y el resultado diario se calculan a partir de las marcaciones guardadas y la fecha de Lima. [[Requisitos Funcionales#RF-08 · Validar la asistencia por día|Regla de asistencia por día]]

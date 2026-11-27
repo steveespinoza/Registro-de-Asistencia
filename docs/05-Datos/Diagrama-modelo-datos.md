@@ -26,7 +26,8 @@ erDiagram
 ## Reglas del modelo
 
 - **Identificación.** El DNI se guarda como texto para conservar ceros iniciales. El nombre puede repetirse y se usa para buscar.
-- **Vínculo de entrada y salida.** Al guardar una salida, `entradaId` indica qué entrada cierra. Deben corresponder al mismo DNI y a la misma fecha de Lima. Una entrada puede tener como máximo una salida. Mientras haya una entrada abierta, se rechaza otra entrada del mismo empleado en esa fecha.
+- **Límite diario.** Las nuevas marcaciones se limitan a una entrada y una salida por DNI y fecha de Lima.
+- **Vínculo de entrada y salida.** Al guardar una salida, `entradaId` indica qué entrada cierra. Deben corresponder al mismo DNI y a la misma fecha de Lima.
 - **Fecha de asistencia.** La aplicación calcula la fecha de Lima a partir de `instanteUtc` usando `America/Lima`. El día cuenta como asistencia cuando existe un par completo en esa fecha. Una entrada sin salida queda incompleta al cambiar el día y el administrador puede registrar una entrada nueva.
 
 [[Alcance-MVP|Alcance del MVP]] · [[Requisitos Funcionales#RF-07 · Conservar los datos en el navegador|Guardado local]] · [[Requisitos Funcionales#RF-08 · Validar la asistencia por día|Regla diaria de asistencia]].

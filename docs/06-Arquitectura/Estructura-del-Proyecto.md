@@ -21,8 +21,10 @@ Registro de Asistencia/
     └── src/
         ├── main.jsx
         ├── App.jsx
+        ├── navegacion.js
         ├── estilos.css
         ├── componentes/
+        │   ├── BarraLateral.jsx
         │   ├── FormularioEmpleado.jsx
         │   ├── BusquedaEmpleados.jsx
         │   ├── AccionesMarcacion.jsx
@@ -41,8 +43,9 @@ Registro de Asistencia/
 | --- | --- |
 | `app/index.html` y `app/src/main.jsx` | Entrada HTML y montaje de React. |
 | `app/package.json` y `app/vite.config.js` | Dependencias, comandos de desarrollo y configuración de Vite para React. |
-| `app/src/App.jsx` | Coordina la carga del registro, la selección del empleado por DNI, las acciones y la actualización de la interfaz tras guardar. |
-| `app/src/componentes/` | Formulario de alta, búsqueda por nombre con DNI visible, botones de entrada y salida e historial del empleado. |
+| `app/src/App.jsx` | Coordina la vista activa, la carga del registro, la selección del empleado por DNI y las operaciones de guardado. |
+| `app/src/navegacion.js` | Define las tres vistas y obtiene la sección activa del fragmento de la URL. |
+| `app/src/componentes/` | Barra lateral, formulario de alta, listado de personal, búsqueda por nombre, acciones de marcación e historial del empleado. |
 | `app/src/dominio/` | Reglas del DNI y las marcaciones. `tiempoLima.js` deriva la fecha y hora en `America/Lima` a partir del instante registrado en UTC. |
 | `app/src/datos/registroLocal.js` | Carga y guarda el JSON de empleados y marcaciones en la clave `registro-asistencia` de `localStorage`. |
 | `app/src/estilos.css` | Estilos base para celular y ajustes para pantallas más amplias. |

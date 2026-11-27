@@ -14,7 +14,7 @@ El administrador ingresa el nombre y el DNI del empleado. Dos personas pueden co
 
 El sistema asocia la marcación al DNI del empleado, captura la fecha y hora automáticamente y la muestra en hora de Lima (`America/Lima`), con precisión de segundos.
 
-Una salida solo puede cerrar una entrada abierta del mismo empleado y de la misma fecha en Lima. Si el día termina sin salida, la entrada queda incompleta en el historial y ese día no cuenta como asistencia. Al día siguiente, el administrador registra una nueva entrada.
+Cada empleado puede registrar una entrada y una salida por fecha de Lima. La salida cierra la entrada de ese día. Si el día termina sin salida, la entrada queda incompleta en el historial y ese día no cuenta como asistencia. Al día siguiente, el administrador puede registrar una nueva entrada.
 
 ## Consultar el historial
 

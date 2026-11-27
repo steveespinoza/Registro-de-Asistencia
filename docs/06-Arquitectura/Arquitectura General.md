@@ -7,7 +7,7 @@ Registro de Asistencia es una demo web estática que se ejecuta en el navegador 
 | Componente | Responsabilidad |
 | --- | --- |
 | Interfaz | Usa React con JSX y CSS. Presenta el formulario de alta, la búsqueda por nombre con DNI en los resultados, las acciones de marcación y el historial por empleado. Muestra las confirmaciones y los errores. |
-| Lógica de aplicación | Implementa en JavaScript las reglas de personal y asistencia. Valida el DNI único, asocia las marcaciones al empleado seleccionado y permite cerrar una entrada abierta del mismo día de Lima. |
+| Lógica de aplicación | Implementa en JavaScript las reglas de personal y asistencia. Valida el DNI único y el límite de una entrada y una salida por empleado y fecha de Lima. |
 | Fecha y hora | Toma el instante del reloj del dispositivo al marcar. Representa el instante en UTC para su guardado y lo convierte a `America/Lima` para mostrar la fecha y hora con segundos y determinar el día de asistencia. |
 | Persistencia local | Lee y escribe en `localStorage` el objeto JSON de la clave `registro-asistencia`, que contiene las listas de empleados y marcaciones. Recupera los datos al recargar la misma demo en el mismo navegador. |
 
